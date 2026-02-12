@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -9,76 +8,63 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace controleDeGastos.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreateWithAuth : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateTable(
                 name: "CategoriasDespesa",
                 columns: table => new
                 {
                     CategoriaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CategoriasDespesa", x => x.CategoriaId);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "TiposDespesa",
                 columns: table => new
                 {
                     TipoDespesaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TiposDespesa", x => x.TipoDespesaId);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
                 {
                     UsuarioId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    SenhaHash = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RefreshToken = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RefreshTokenExpiry = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    SenhaHash = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    RefreshTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.UsuarioId);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "SubCategoriasDespesa",
                 columns: table => new
                 {
                     SubCategoriaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CategoriaId = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,15 +75,14 @@ namespace controleDeGastos.Migrations
                         principalTable: "CategoriasDespesa",
                         principalColumn: "CategoriaId",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Anos",
                 columns: table => new
                 {
                     AnoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Numero = table.Column<int>(type: "int", nullable: false),
                     UsuarioId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -110,18 +95,55 @@ namespace controleDeGastos.Migrations
                         principalTable: "Usuarios",
                         principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DespesasRecorrentes",
+                columns: table => new
+                {
+                    DespesaRecorrenteId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    TipoDespesaId = table.Column<int>(type: "int", nullable: false),
+                    SubCategoriaId = table.Column<int>(type: "int", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Valor = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    AnoInicio = table.Column<int>(type: "int", nullable: false),
+                    MesInicio = table.Column<int>(type: "int", nullable: false),
+                    AnoFim = table.Column<int>(type: "int", nullable: false),
+                    MesFim = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DespesasRecorrentes", x => x.DespesaRecorrenteId);
+                    table.ForeignKey(
+                        name: "FK_DespesasRecorrentes_SubCategoriasDespesa_SubCategoriaId",
+                        column: x => x.SubCategoriaId,
+                        principalTable: "SubCategoriasDespesa",
+                        principalColumn: "SubCategoriaId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DespesasRecorrentes_TiposDespesa_TipoDespesaId",
+                        column: x => x.TipoDespesaId,
+                        principalTable: "TiposDespesa",
+                        principalColumn: "TipoDespesaId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DespesasRecorrentes_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuarios",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Meses",
                 columns: table => new
                 {
                     MesId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     AnoId = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Nome = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Numero = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -133,26 +155,30 @@ namespace controleDeGastos.Migrations
                         principalTable: "Anos",
                         principalColumn: "AnoId",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Despesas",
                 columns: table => new
                 {
                     DespesaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MesId = table.Column<int>(type: "int", nullable: false),
                     TipoDespesaId = table.Column<int>(type: "int", nullable: false),
                     SubCategoriaId = table.Column<int>(type: "int", nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Descricao = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Valor = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    PercentualReceita = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true)
+                    PercentualReceita = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
+                    DespesaRecorrenteId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Despesas", x => x.DespesaId);
+                    table.ForeignKey(
+                        name: "FK_Despesas_DespesasRecorrentes_DespesaRecorrenteId",
+                        column: x => x.DespesaRecorrenteId,
+                        principalTable: "DespesasRecorrentes",
+                        principalColumn: "DespesaRecorrenteId");
                     table.ForeignKey(
                         name: "FK_Despesas_Meses_MesId",
                         column: x => x.MesId,
@@ -171,18 +197,16 @@ namespace controleDeGastos.Migrations
                         principalTable: "TiposDespesa",
                         principalColumn: "TipoDespesaId",
                         onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Investimentos",
                 columns: table => new
                 {
                     InvestimentoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MesId = table.Column<int>(type: "int", nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Descricao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Valor = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     PercentualReceita = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true)
                 },
@@ -195,18 +219,16 @@ namespace controleDeGastos.Migrations
                         principalTable: "Meses",
                         principalColumn: "MesId",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Receitas",
                 columns: table => new
                 {
                     ReceitaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MesId = table.Column<int>(type: "int", nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Descricao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Valor = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
                 },
                 constraints: table =>
@@ -218,15 +240,14 @@ namespace controleDeGastos.Migrations
                         principalTable: "Meses",
                         principalColumn: "MesId",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Saldos",
                 columns: table => new
                 {
                     SaldoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MesId = table.Column<int>(type: "int", nullable: false),
                     Receita = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Investimentos = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
@@ -235,8 +256,7 @@ namespace controleDeGastos.Migrations
                     DespesasExtras = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     DespesasAdicionais = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Balanco = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    Observacao = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Observacao = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -247,8 +267,7 @@ namespace controleDeGastos.Migrations
                         principalTable: "Meses",
                         principalColumn: "MesId",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.InsertData(
                 table: "CategoriasDespesa",
@@ -326,6 +345,11 @@ namespace controleDeGastos.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Despesas_DespesaRecorrenteId",
+                table: "Despesas",
+                column: "DespesaRecorrenteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Despesas_MesId",
                 table: "Despesas",
                 column: "MesId");
@@ -339,6 +363,21 @@ namespace controleDeGastos.Migrations
                 name: "IX_Despesas_TipoDespesaId",
                 table: "Despesas",
                 column: "TipoDespesaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DespesasRecorrentes_SubCategoriaId",
+                table: "DespesasRecorrentes",
+                column: "SubCategoriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DespesasRecorrentes_TipoDespesaId",
+                table: "DespesasRecorrentes",
+                column: "TipoDespesaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DespesasRecorrentes_UsuarioId",
+                table: "DespesasRecorrentes",
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Investimentos_MesId",
@@ -389,19 +428,22 @@ namespace controleDeGastos.Migrations
                 name: "Saldos");
 
             migrationBuilder.DropTable(
+                name: "DespesasRecorrentes");
+
+            migrationBuilder.DropTable(
+                name: "Meses");
+
+            migrationBuilder.DropTable(
                 name: "SubCategoriasDespesa");
 
             migrationBuilder.DropTable(
                 name: "TiposDespesa");
 
             migrationBuilder.DropTable(
-                name: "Meses");
+                name: "Anos");
 
             migrationBuilder.DropTable(
                 name: "CategoriasDespesa");
-
-            migrationBuilder.DropTable(
-                name: "Anos");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");

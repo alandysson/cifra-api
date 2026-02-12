@@ -12,8 +12,8 @@ using controleDeGastos.Infrastructure.Data;
 namespace controleDeGastos.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260210180946_AddDespesaRecorrente")]
-    partial class AddDespesaRecorrente
+    [Migration("20260212003919_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,17 +21,17 @@ namespace controleDeGastos.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.11")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("cifra.Domain.Entities.Ano", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Ano", b =>
                 {
                     b.Property<int>("AnoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("AnoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AnoId"));
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
@@ -49,18 +49,18 @@ namespace controleDeGastos.Migrations
                     b.ToTable("Anos");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.CategoriaDespesa", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.CategoriaDespesa", b =>
                 {
                     b.Property<int>("CategoriaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("CategoriaId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoriaId"));
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("CategoriaId");
 
@@ -124,18 +124,18 @@ namespace controleDeGastos.Migrations
                         });
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Despesa", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Despesa", b =>
                 {
                     b.Property<int>("DespesaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("DespesaId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DespesaId"));
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int?>("DespesaRecorrenteId")
                         .HasColumnType("int");
@@ -170,13 +170,13 @@ namespace controleDeGastos.Migrations
                     b.ToTable("Despesas");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.DespesaRecorrente", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.DespesaRecorrente", b =>
                 {
                     b.Property<int>("DespesaRecorrenteId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("DespesaRecorrenteId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DespesaRecorrenteId"));
 
                     b.Property<int>("AnoFim")
                         .HasColumnType("int");
@@ -187,7 +187,7 @@ namespace controleDeGastos.Migrations
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("MesFim")
                         .HasColumnType("int");
@@ -219,18 +219,18 @@ namespace controleDeGastos.Migrations
                     b.ToTable("DespesasRecorrentes");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Investimento", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Investimento", b =>
                 {
                     b.Property<int>("InvestimentoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("InvestimentoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InvestimentoId"));
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("MesId")
                         .HasColumnType("int");
@@ -250,13 +250,13 @@ namespace controleDeGastos.Migrations
                     b.ToTable("Investimentos");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Mes", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Mes", b =>
                 {
                     b.Property<int>("MesId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("MesId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MesId"));
 
                     b.Property<int>("AnoId")
                         .HasColumnType("int");
@@ -264,7 +264,7 @@ namespace controleDeGastos.Migrations
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
@@ -276,18 +276,18 @@ namespace controleDeGastos.Migrations
                     b.ToTable("Meses");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Receita", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Receita", b =>
                 {
                     b.Property<int>("ReceitaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ReceitaId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReceitaId"));
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("MesId")
                         .HasColumnType("int");
@@ -303,13 +303,13 @@ namespace controleDeGastos.Migrations
                     b.ToTable("Receitas");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Saldo", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Saldo", b =>
                 {
                     b.Property<int>("SaldoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("SaldoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaldoId"));
 
                     b.Property<decimal>("Balanco")
                         .HasPrecision(18, 2)
@@ -340,7 +340,7 @@ namespace controleDeGastos.Migrations
 
                     b.Property<string>("Observacao")
                         .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<decimal>("Receita")
                         .HasPrecision(18, 2)
@@ -354,13 +354,13 @@ namespace controleDeGastos.Migrations
                     b.ToTable("Saldos");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.SubCategoriaDespesa", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.SubCategoriaDespesa", b =>
                 {
                     b.Property<int>("SubCategoriaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("SubCategoriaId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubCategoriaId"));
 
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
@@ -368,7 +368,7 @@ namespace controleDeGastos.Migrations
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("SubCategoriaId");
 
@@ -547,18 +547,18 @@ namespace controleDeGastos.Migrations
                         });
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.TipoDespesa", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.TipoDespesa", b =>
                 {
                     b.Property<int>("TipoDespesaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("TipoDespesaId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TipoDespesaId"));
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("TipoDespesaId");
 
@@ -587,38 +587,38 @@ namespace controleDeGastos.Migrations
                         });
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Usuario", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Usuario", b =>
                 {
                     b.Property<int>("UsuarioId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UsuarioId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioId"));
 
                     b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("RefreshToken")
                         .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime?>("RefreshTokenExpiry")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SenhaHash")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("UsuarioId");
 
@@ -628,9 +628,9 @@ namespace controleDeGastos.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Ano", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Ano", b =>
                 {
-                    b.HasOne("cifra.Domain.Entities.Usuario", "Usuario")
+                    b.HasOne("controleDeGastos.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Anos")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -639,26 +639,25 @@ namespace controleDeGastos.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Despesa", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Despesa", b =>
                 {
-                    b.HasOne("cifra.Domain.Entities.DespesaRecorrente", "DespesaRecorrente")
+                    b.HasOne("controleDeGastos.Domain.Entities.DespesaRecorrente", "DespesaRecorrente")
                         .WithMany("Despesas")
-                        .HasForeignKey("DespesaRecorrenteId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("DespesaRecorrenteId");
 
-                    b.HasOne("cifra.Domain.Entities.Mes", "Mes")
+                    b.HasOne("controleDeGastos.Domain.Entities.Mes", "Mes")
                         .WithMany("Despesas")
                         .HasForeignKey("MesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("cifra.Domain.Entities.SubCategoriaDespesa", "SubCategoria")
+                    b.HasOne("controleDeGastos.Domain.Entities.SubCategoriaDespesa", "SubCategoria")
                         .WithMany("Despesas")
                         .HasForeignKey("SubCategoriaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("cifra.Domain.Entities.TipoDespesa", "TipoDespesa")
+                    b.HasOne("controleDeGastos.Domain.Entities.TipoDespesa", "TipoDespesa")
                         .WithMany("Despesas")
                         .HasForeignKey("TipoDespesaId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -673,21 +672,21 @@ namespace controleDeGastos.Migrations
                     b.Navigation("TipoDespesa");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.DespesaRecorrente", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.DespesaRecorrente", b =>
                 {
-                    b.HasOne("cifra.Domain.Entities.SubCategoriaDespesa", "SubCategoria")
+                    b.HasOne("controleDeGastos.Domain.Entities.SubCategoriaDespesa", "SubCategoria")
                         .WithMany()
                         .HasForeignKey("SubCategoriaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("cifra.Domain.Entities.TipoDespesa", "TipoDespesa")
+                    b.HasOne("controleDeGastos.Domain.Entities.TipoDespesa", "TipoDespesa")
                         .WithMany()
                         .HasForeignKey("TipoDespesaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("cifra.Domain.Entities.Usuario", "Usuario")
+                    b.HasOne("controleDeGastos.Domain.Entities.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -700,9 +699,9 @@ namespace controleDeGastos.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Investimento", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Investimento", b =>
                 {
-                    b.HasOne("cifra.Domain.Entities.Mes", "Mes")
+                    b.HasOne("controleDeGastos.Domain.Entities.Mes", "Mes")
                         .WithMany("Investimentos")
                         .HasForeignKey("MesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -711,9 +710,9 @@ namespace controleDeGastos.Migrations
                     b.Navigation("Mes");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Mes", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Mes", b =>
                 {
-                    b.HasOne("cifra.Domain.Entities.Ano", "Ano")
+                    b.HasOne("controleDeGastos.Domain.Entities.Ano", "Ano")
                         .WithMany("Meses")
                         .HasForeignKey("AnoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -722,9 +721,9 @@ namespace controleDeGastos.Migrations
                     b.Navigation("Ano");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Receita", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Receita", b =>
                 {
-                    b.HasOne("cifra.Domain.Entities.Mes", "Mes")
+                    b.HasOne("controleDeGastos.Domain.Entities.Mes", "Mes")
                         .WithMany("Receitas")
                         .HasForeignKey("MesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -733,20 +732,20 @@ namespace controleDeGastos.Migrations
                     b.Navigation("Mes");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Saldo", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Saldo", b =>
                 {
-                    b.HasOne("cifra.Domain.Entities.Mes", "Mes")
+                    b.HasOne("controleDeGastos.Domain.Entities.Mes", "Mes")
                         .WithOne("Saldo")
-                        .HasForeignKey("cifra.Domain.Entities.Saldo", "MesId")
+                        .HasForeignKey("controleDeGastos.Domain.Entities.Saldo", "MesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Mes");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.SubCategoriaDespesa", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.SubCategoriaDespesa", b =>
                 {
-                    b.HasOne("cifra.Domain.Entities.CategoriaDespesa", "Categoria")
+                    b.HasOne("controleDeGastos.Domain.Entities.CategoriaDespesa", "Categoria")
                         .WithMany("SubCategorias")
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -755,22 +754,22 @@ namespace controleDeGastos.Migrations
                     b.Navigation("Categoria");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Ano", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Ano", b =>
                 {
                     b.Navigation("Meses");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.CategoriaDespesa", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.CategoriaDespesa", b =>
                 {
                     b.Navigation("SubCategorias");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.DespesaRecorrente", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.DespesaRecorrente", b =>
                 {
                     b.Navigation("Despesas");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Mes", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Mes", b =>
                 {
                     b.Navigation("Despesas");
 
@@ -781,17 +780,17 @@ namespace controleDeGastos.Migrations
                     b.Navigation("Saldo");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.SubCategoriaDespesa", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.SubCategoriaDespesa", b =>
                 {
                     b.Navigation("Despesas");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.TipoDespesa", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.TipoDespesa", b =>
                 {
                     b.Navigation("Despesas");
                 });
 
-            modelBuilder.Entity("cifra.Domain.Entities.Usuario", b =>
+            modelBuilder.Entity("controleDeGastos.Domain.Entities.Usuario", b =>
                 {
                     b.Navigation("Anos");
                 });

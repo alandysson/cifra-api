@@ -42,10 +42,10 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Configuração do DbContext (MySQL)
+// Configuração do DbContext (SQL Server)
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+    options.UseSqlServer(connectionString));
 
 // Registro do UnitOfWork e Repositories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

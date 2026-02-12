@@ -146,7 +146,7 @@ public class AppDbContext : DbContext
             entity.HasOne(e => e.DespesaRecorrente)
                   .WithMany(dr => dr.Despesas)
                   .HasForeignKey(e => e.DespesaRecorrenteId)
-                  .OnDelete(DeleteBehavior.SetNull);
+                  .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         // DespesaRecorrente
