@@ -4,10 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'Cifra.API/**'
-      - 'Cifra.Domain/**'
-      - 'Cifra.Application/**'
-      - 'Cifra.Infrastructure/**'
+      - 'cifra/**'
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -21,13 +19,13 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore
-        run: dotnet restore Cifra.API/Cifra.API.csproj
+        run: dotnet restore cifra/cifra.csproj
 
       - name: Build
-        run: dotnet build Cifra.API/Cifra.API.csproj -c Release --no-restore
+        run: dotnet build cifra/cifra.csproj -c Release --no-restore
 
       - name: Publish
-        run: dotnet publish Cifra.API/Cifra.API.csproj -c Release -o ./publish --no-build
+        run: dotnet publish cifra/cifra.csproj -c Release -o ./publish --no-build
 
       - name: Deploy to Azure
         uses: azure/webapps-deploy@v3
