@@ -16,6 +16,7 @@ public static class DespesaMapping
             despesa.SubCategoria.Categoria.Nome,
             despesa.Descricao,
             despesa.Valor,
+            despesa.DataDespesa,
             totalReceita > 0 ? Math.Round((despesa.Valor / totalReceita) * 100, 2) : null
         );
 }

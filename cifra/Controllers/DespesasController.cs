@@ -30,16 +30,16 @@ public class DespesasController : ControllerBase
         var despesas = await _unitOfWork.Despesas.GetByMesIdAsync(mesId);
         var totalReceita = await _unitOfWork.Receitas.GetTotalByMesIdAsync(mesId);
 
-        var result = despesas.Select(d => d.ToDto(totalReceita));
+        var result = despesas.Select(d => d.ToDto(totalReceita)).AsEnumerable();
 
         if (!string.IsNullOrWhiteSpace(descricao))
             result = result.Where(d => d.Descricao.Contains(descricao, StringComparison.OrdinalIgnoreCase));
 
         if (!string.IsNullOrWhiteSpace(categoria))
-        {
             result = result.Where(d => d.TipoDespesaNome.Contains(categoria, StringComparison.OrdinalIgnoreCase));
-        }
-        
+
+        result = result.OrderByDescending(d => d.DataDespesa);
+
         return Ok(PagedResponseDto<DespesaDto>.Create(result, page, pageSize));
     }
 

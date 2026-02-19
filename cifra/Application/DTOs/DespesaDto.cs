@@ -10,6 +10,7 @@ public record DespesaDto(
     string CategoriaNome,
     string Descricao,
     decimal Valor,
+    DateTime DataDespesa,
     decimal? PercentualReceita
 );
 

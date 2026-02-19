@@ -10,7 +10,7 @@ public class Despesa
     public decimal Valor { get; set; }
     public decimal? PercentualReceita { get; set; }
     public int? DespesaRecorrenteId { get; set; }
-
+    public DateTime DataDespesa { get; set; } = DateTime.UtcNow;
     // Navegação
     public Mes Mes { get; set; } = null!;
     public TipoDespesa TipoDespesa { get; set; } = null!;
